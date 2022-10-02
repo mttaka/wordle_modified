@@ -5,7 +5,6 @@
 /* maching check ga 2 mozi zutsu ninaru to shinu */
 /* CSS no BOX nado mo shinu kamo */
 /* hitomozi irerunomo taihenkamo */
-const test = 1;
 
 import { WORDS } from "./words.js";
 

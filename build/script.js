@@ -1,9 +1,11 @@
+/* test git hub change */
+
 /* saki ni yonmozi de seikai wo */
 /* 12 mozi charactor de 3 letter ireru houga yoikamo */
 /* maching check ga 2 mozi zutsu ninaru to shinu */
 /* CSS no BOX nado mo shinu kamo */
 /* hitomozi irerunomo taihenkamo */
-
+const test = 1;
 
 import { WORDS } from "./words.js";
 

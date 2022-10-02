@@ -1,4 +1,3 @@
-/* test git hub change */
 
 /* saki ni yonmozi de seikai wo */
 /* 12 mozi charactor de 3 letter ireru houga yoikamo */

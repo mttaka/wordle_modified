@@ -1,13 +1,3 @@
-/* test */
-/* saki ni yonmozi de seikai wo */
-/* 12 mozi charactor de 3 letter ireru houga yoikamo */
-/* maching check ga 2 mozi zutsu ninaru to shinu */
-/* CSS no BOX nado mo shinu kamo */
-/* hitomozi irerunomo taihenkamo */
-
-/* Number of Input 12 */
-/* hikaku mo 12 */
-/* hyougendake 4 */
 
 /* import { WORDS } from "./words.js"; */
 
@@ -39,6 +29,7 @@ console.log(typeof window )
         board.appendChild(row)
     }
 }
+
 initBoard()
 const test1 = tone[1]
 const test2 = tone[2]
@@ -56,12 +47,9 @@ function insertCode (code,num) {
     }
     let row = document.getElementsByClassName("letter-row")[3 - guessesRemaining]
     let box = row.children[nextCode]
-
-    console.log(box + 'box')
     box.textContent = code
     box.classList.add("filled-box")
-    currentGuess.push(num)
-    console.log(currentGuess+"currentGuess")
+    currentGuess.push(Number(num))
     nextCode += 1
 }
 
@@ -71,14 +59,11 @@ function deleteCode () {
     box.textContent = ""
     box.classList.remove("filled-box")
     currentGuess.pop()
-    console.log(currentGuess+"currentGuess")
     nextCode-= 1
 }
 
-
 /* Not key listner but getting the piano code */
 document.addEventListener("keyup", (e) => {
-
     if (guessesRemaining === 0) {
         return
     }
@@ -92,14 +77,14 @@ document.addEventListener("keyup", (e) => {
         checkGuess()
         return
     }
-    /*
-    let found = pressedKey.match(/[a-z3-4#\s]/gi)
+
+    let found = pressedKey.match(/[0-9]/gi)
     if (!found || found.length > 1) {
         return
-    } else {
-        insertLetter(pressedKey)
     }
-    */
+    else {
+        insertCode(tone[pressedKey],pressedKey)
+    }
 })
 
 function shadeKeyBoard(letter, color) {
@@ -129,49 +114,40 @@ function checkGuess () {
         alert("Not enough letters!")
         return
     }
-
-    for(let i = 0; i<4; i++){
-      console.log( currentGuess[i],i+":currentGuess[i] Dayo")
-    }
-
     for (let i = 0; i < 4; i++) {
         let bgColor = ''
         let box = row.children[i]
-        console.log(currentGuess[i]+"currentGuess[i]")
-
-        console.log(rightGuessString[i]+":rightGuessString")
-        if(rightGuessString.indexOf(currentGuess[i])=== -1){
-          bgColor = 'grey'
-          console.log(i,rightGuessString.indexOf(currentGuess[i]),bgColor+"i+ kekka")
+        let current_code = currentGuess[i]
+        if(rightGuessString.includes(current_code)=== true){
+          if(rightGuessString[i] === current_code ) {
+          bgColor = 'green'
+          }
+          else {
+          bgColor = 'yellow'
+          }
         }
         else {
-            bgColor = 'yellow'
-            console.log(i,rightGuessString.indexOf(currentGuess[i]),bgColor+"i+ kekka")
-            if(rightGuessString[i] === currentGuess[i] ) {
-            bgColor = 'green'
-            console.log(i,rightGuessString.indexOf(currentGuess[i]),bgColor+"i+ kekka")
-          }
-      }
+          bgColor = 'grey'
+        }
 
         let delay = 250 * i
         setTimeout(()=> {            //shade box
             box.style.backgroundColor = bgColor
             shadeKeyBoard(box,bgColor)
         }, delay)
-    }
+   }
 
-    if (currentGuess.toString() === rightGuessString.toString()) {
+   if (currentGuess.toString() === rightGuessString.toString()) {
         alert("You guessed right! Game over!")
         guessesRemaining = 0
         return
     } else {
         guessesRemaining -= 1;
-/*        currentGuess = []; */
+        currentGuess = [];
         nextCode = 0;
-
-        if (guessesRemaining === 0) {
+    }
+    if (guessesRemaining === 0) {
             alert("You've run out of guesses! Game over!")
             alert(`The right word was: "${rightGuessString}"`)
         }
-      }
-    }
+}

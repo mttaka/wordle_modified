@@ -9,7 +9,7 @@ const NUMBER_OF_TONE = 4
 
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
-let nextCode = 0;
+let nextChord = 0;
 let rightGuessString= [1,3,7,9]
 
 function initBoard() {
@@ -29,47 +29,49 @@ console.log(typeof window )
         board.appendChild(row)
     }
 }
-
 initBoard()
 const test1 = tone[1]
 const test2 = tone[2]
 const test3 = tone[3]
 const test4 = tone[4]
 
-insertCode(test1,1)
-insertCode(test2,2)
-insertCode(test3,3)
-insertCode(test4,4)
+insertChord(test1,1)
+insertChord(test2,2)
+insertChord(test3,3)
+insertChord(test4,4)
 
-function insertCode (code,num) {
-    if (nextCode === NUMBER_OF_TONE) {
+function insertChord (chord,num) {
+    if (nextChord === NUMBER_OF_TONE) {
         return
     }
     let row = document.getElementsByClassName("letter-row")[3 - guessesRemaining]
-    let box = row.children[nextCode]
-    box.textContent = code
+    let box = row.children[nextChord]
+    box.textContent = chord
     box.classList.add("filled-box")
     currentGuess.push(Number(num))
-    nextCode += 1
+    console.log(currentGuess+"currentGuess")
+    nextChord += 1
 }
 
-function deleteCode () {
+function deleteChord () {
+    console.log("colled-delete")
     let row = document.getElementsByClassName("letter-row")[3 - guessesRemaining]
-    let box = row.children[nextCode - 1]
+    let box = row.children[nextChord - 1]
     box.textContent = ""
     box.classList.remove("filled-box")
     currentGuess.pop()
-    nextCode-= 1
+    console.log(currentGuess+"currentGuess")
+    nextChord-= 1
 }
 
-/* Not key listner but getting the piano code */
+/* Not key listner but getting the piano chord */
 document.addEventListener("keyup", (e) => {
     if (guessesRemaining === 0) {
         return
     }
     let pressedKey = String(e.key)
-    if (pressedKey === "Backspace" && nextCode !== 0) {
-        deleteCode()
+    if (pressedKey === "Backspace" && nextChord !== 0) {
+        deleteChord()
         return
     }
 
@@ -81,10 +83,10 @@ document.addEventListener("keyup", (e) => {
     let found = pressedKey.match(/[0-9]/gi)
     if (!found || found.length > 1) {
         return
+    } else {
+        insertChord(tone[pressedKey],pressedKey)
     }
-    else {
-        insertCode(tone[pressedKey],pressedKey)
-    }
+
 })
 
 function shadeKeyBoard(letter, color) {
@@ -111,15 +113,15 @@ function checkGuess () {
         guessString += val
     }
     if (guessString.length != NUMBER_OF_TONE ) {
-        alert("Not enough letters!")
+        toastr.warning("Not enough letters!")
         return
     }
     for (let i = 0; i < 4; i++) {
         let bgColor = ''
         let box = row.children[i]
-        let current_code = currentGuess[i]
-        if(rightGuessString.includes(current_code)=== true){
-          if(rightGuessString[i] === current_code ) {
+        let current_chord = currentGuess[i]
+        if(rightGuessString.includes(current_chord)=== true){
+          if(rightGuessString[i] === current_chord ) {
           bgColor = 'green'
           }
           else {
@@ -138,16 +140,16 @@ function checkGuess () {
    }
 
    if (currentGuess.toString() === rightGuessString.toString()) {
-        alert("You guessed right! Game over!")
+        toastr.success("you guessed right! Game over!")
         guessesRemaining = 0
         return
     } else {
         guessesRemaining -= 1;
         currentGuess = [];
-        nextCode = 0;
+        nextChord = 0;
     }
     if (guessesRemaining === 0) {
-            alert("You've run out of guesses! Game over!")
-            alert(`The right word was: "${rightGuessString}"`)
+            toastr.error("You've run out of guesses! Game over!")
+            toastr.info(`The right word was: "${rightGuessString}"`)
         }
 }

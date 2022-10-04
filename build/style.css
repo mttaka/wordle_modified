@@ -29,18 +29,3 @@ h1 {
 .letter-row {
   display: flex;
 }
-
-.letter-box-dummy {
-  border: 2px solid grey;
-  border-radius: 3px;
-  margin: 2px;
-  font-size: 2.5rem;
-  font-weight: 700;
-  height: 3rem;
-  /* 3 -> 6 */
-  width: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-}
